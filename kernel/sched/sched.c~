@@ -49,7 +49,6 @@ void sched_init(task_t* main_task  __attribute__((unused)))
     context->r6 = 0;
     context->sp = system_tcb[IDLE_PRIO].kstack_high;
     context->lr = launch_task;
-	runqueue_add(&system_tcb[IDLE_PRIO],IDLE_PRIO);
 
 }
 void set_context(task_t *task, int prio)
@@ -87,21 +86,11 @@ void set_context(task_t *task, int prio)
 void allocate_tasks(task_t** t  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {
     size_t i;
-    
-    
-    
-    
     //Initialize Idle task sets the group_run_bits &  run_bits
-    //sched_init(NULL);
+    sched_init(NULL);
     //Initializes the run_queue and adds Idle task
-    //runqueue_init();
+    runqueue_init();
     //Used for easy referencing
-    
-    
-    
-    
-    
-    
     task_t *tasks = t[0];	
     for(i=0;i<num_tasks;i++)
     {	

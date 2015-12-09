@@ -60,7 +60,7 @@ void runqueue_init(void)
 {
     size_t i;
     group_run_bits=0;
-//    uint8_t position_in_group, group;
+    uint8_t position_in_group, group;
     //Clears the run_queue
     for(i=0;i<OS_MAX_TASKS;i++)
     {
@@ -71,7 +71,6 @@ void runqueue_init(void)
     {
         run_bits[i]=0;
     }
-    /*
     // Create the IDLE TASK
     run_list[IDLE_PRIO] = &system_tcb[IDLE_PRIO];
     //Set bits for the IDLE TASK
@@ -80,7 +79,7 @@ void runqueue_init(void)
 
     run_bits[group] = run_bits[group] |(1<<position_in_group);
     group_run_bits = group_run_bits | (1<<group);
-    */
+
 }
 
 /**

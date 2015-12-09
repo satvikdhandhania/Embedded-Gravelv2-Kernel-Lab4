@@ -16,12 +16,17 @@
 #include <syscall.h>
 #include <sched.h>
 
+#include <../sched/sched_i.h>
+
+
+
 #include <arm/reg.h>
 #include <arm/psr.h>
 #include <arm/exception.h>
 #include <arm/physmem.h>
 #include <device.h>
 
+#define NULL 0
 
 // Implements task_create
 
@@ -67,11 +72,39 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
             tasks[index]= temp;
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    runqueue_init();
+    
+    
+    
+    
+    
+    
+    
     //Initializes all the devices
     dev_init();
-
     //Initialize tcb for each task
     allocate_tasks(&tasks,num_tasks);
+   
+    
+    
+    
+    sched_init(NULL);
+    
+    
+    
+    
+    
+    
+    
+    
     enable_interrupts();
     //To set idle task as the first task and get the lowest priority
     dispatch_nosave();
