@@ -103,12 +103,12 @@ void allocate_tasks(task_t** t  __attribute__((unused)), size_t num_tasks  __att
     
     
     task_t *tasks = t[0];	
-    for(i=0;i<num_tasks;i++)
+    for(i=1;i<=num_tasks;i++)
     {	
         //Setup TCB for task
-        set_context(tasks+i,i+1);
+        set_context((tasks+(i-1)),i);
         //Add tcb to runqueue
-        runqueue_add(&system_tcb[i+1],i+1);
+        runqueue_add(&system_tcb[i],i);
     }
     //Add the Idle task to the current running task list to have the lowest  priority
     dispatch_init(&system_tcb[IDLE_PRIO]);

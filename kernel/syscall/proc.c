@@ -47,11 +47,6 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
     {
         if((((unsigned)(tasks[i].stack_pos)) < USR_START_ADDR) || (((unsigned)(tasks[i].stack_pos)) > USR_END_ADDR))
             return -EFAULT;
-        //For part 2
-        //if(tasks[i].C == 0)
-        //    return ESCHED;
-        //if(tasks[i].T == )
-        //    return ESCHED;
     }
     //Sort tasks to run based on priority
     
