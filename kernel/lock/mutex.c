@@ -115,7 +115,8 @@ int mutex_lock(int mutex  __attribute__((unused)))
     //it is directly assigned
     gtMutex[mutex].bLock = TRUE;
     gtMutex[mutex].pHolding_Tcb = cur_tcb;
-    cur_tcb->holds_lock += 1;       
+    cur_tcb->holds_lock = cur_tcb->holds_lock + 1;       
+    cur_tcb->cur_prio = 0;
     enable_interrupts();
     return 0;
 }
@@ -151,6 +152,8 @@ int mutex_unlock(int mutex  __attribute__((unused)))
     gtMutex[mutex].pHolding_Tcb = NULL;
     //Decreasing the lock count in the tcb
     cur_tcb->holds_lock = cur_tcb->holds_lock - 1;
+    if(cur_tcb->holds_lock == 0)
+        cur_tcb->cur_prio = cur_tcb->native_prio;
 
     //If the sleep queue is not empty add the first task to the run_queue
     if(gtMutex[mutex].pSleep_queue != NULL)

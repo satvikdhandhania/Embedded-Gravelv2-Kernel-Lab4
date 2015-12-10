@@ -88,7 +88,7 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
 
     if (assign_schedule(&tasks, num_tasks) == 0)
     {
-        printf("\nScheduling failed!!\n");
+        printf("schedule failed\n");
         return -ESCHED;
     }
 
