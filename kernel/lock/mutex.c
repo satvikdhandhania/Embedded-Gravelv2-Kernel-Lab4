@@ -22,7 +22,7 @@ Date: 4th November 2015
 #define NULL 0
 
 mutex_t gtMutex[OS_NUM_MUTEX];
-
+//Initializes all mutexes for the initial stage, called by kernel's main at the beginning
 void mutex_init()
 {   
     int i;
@@ -36,7 +36,11 @@ void mutex_init()
     }
 
 }
-
+/* Called by user programs to allocate a mutex from the available mutexes.
+ * It first checks for the availability and then returns the index position 
+ * so that it can be referenced in the future. Once allocated it will never be
+ * available again.
+ */
 int mutex_create(void)
 {
     int i;
@@ -59,6 +63,12 @@ int mutex_create(void)
     //Control reaches here only when no mutex is available (equals OS_NUM_MUTEX)
     return -ENOMEM; 
 }
+/*
+ *Check various conditions when user cannot lock a mutex and if legible allows the user 
+ *to capture the mutex. Interrupts are handled in the process so that other tasks do not
+ *interfere. As soon as a task locks a mutex it's priority becomes 0 that is the highest
+ *priority.
+ */
 
 int mutex_lock(int mutex  __attribute__((unused)))
 {
@@ -120,7 +130,12 @@ int mutex_lock(int mutex  __attribute__((unused)))
     enable_interrupts();
     return 0;
 }
-
+/*
+ *Check's for various conditions where a task may be unable to unlock the mutex.
+ * If possible it unlocks the mutex and if the current task is not holding any 
+ * mutex it restores its current priority back to the native priority.
+ *
+ */
 int mutex_unlock(int mutex  __attribute__((unused)))
 {
     tcb_t *temp;

@@ -29,15 +29,18 @@
 
 #define NULL 0
 
-// Implements task_create
+// Implements task_create, sorts and sends tasks to assign schedule to determine schedulabilty initializes runqueue
+// and devices.
 
 int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {
     disable_interrupts();
     size_t i,j,min,index;
     task_t temp;
-    //If tasks are more than what the kernel supports return error
-    if(num_tasks > OS_AVAIL_TASKS)
+    // If tasks are more than what the kernel supports return error
+    // The kernal supports only 62 tasks as 0 is reserved for highest priority task
+    // Thus we check for OS_AVAIL_TASKS for num_tasks equal to OS_AVAIL_TASKS
+    if(num_tasks >= OS_AVAIL_TASKS || num_tasks <= 0)
         return -EINVAL;
     //If the tasks are stored outside the user address space
     if(!valid_addr(tasks,sizeof(task_t)*num_tasks,USR_START_ADDR, USR_END_ADDR))
@@ -71,12 +74,6 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
     }
    
 
-
-
-
-
-
-
     runqueue_init();
     //Initializes all the devices
     dev_init();
@@ -90,9 +87,7 @@ int task_create(task_t* tasks  __attribute__((unused)), size_t num_tasks  __attr
     //Initialize tcb for each task
     allocate_tasks(&tasks,num_tasks);
 
-
     sched_init(NULL);
-
 
     enable_interrupts();
     //To set idle task as the first task and get the lowest priority

@@ -28,7 +28,7 @@ static __attribute__((unused)) tcb_t* cur_tcb;
  * will preempt it when dispatching the first task.
  */
 void dispatch_init(tcb_t* idle __attribute__((unused)))
-{
+{   //Assigning idle task just for the sake of comparison for the first dispatch_save.DOES NOT LAUNCH IT.
     cur_tcb = idle;
 }
 

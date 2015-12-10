@@ -27,7 +27,7 @@ static double bounds[63] __attribute__((unused)) = { 1.000000,0.828427,0.779763,
  * The task list at the end of this method will be sorted in order is priority
  * -- from highest priority (lowest priority number) to lowest priority
  * (highest priority number).
- *
+ * -----SORTING WILL BE HANDLED IN THE TASK_CREATE FUNCTION FOR THIS IMPLEMENTATION-----
  * @param tasks  An array of task pointers containing the task set to schedule.
  * @param num_tasks  The number of tasks in the array.
  *
@@ -36,33 +36,8 @@ static double bounds[63] __attribute__((unused)) = { 1.000000,0.828427,0.779763,
  */
 int assign_schedule(task_t** tasks  __attribute__((unused)), size_t num_tasks  __attribute__((unused)))
 {   
-    size_t i;//,j,min,index;
+    size_t i;
     double  utilization=0.0;
-    //task_t temp;
-    /*
-    //Selection sort
-    for(i=0;i<num_tasks;i++)
-    {
-        min = (*tasks)[i].T;
-        index = i;
-        for(j=i+1; j<num_tasks;j++)
-        {
-            if((*tasks)[j].T < min)
-            { 
-                min = (*tasks)[j].T;
-                index = j;
-            }
-        }
-        if(index!=i)
-        {
-            temp = (*tasks)[i];
-            (*tasks)[i]=(*tasks)[index];
-            (*tasks)[index]= temp;
-        }
-    }
-
-*/
-
 
     for(i=0;i<num_tasks;i++)
     {
